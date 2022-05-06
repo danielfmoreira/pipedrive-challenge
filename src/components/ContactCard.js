@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function ContactCard({item, index, getItemStyle}) {
   return (
-    <Draggable key={item.id} draggableId={item.id} index={index}>
+    <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
     {(provided, snapshot) => (
       <div
         className="card"
@@ -16,7 +16,7 @@ function ContactCard({item, index, getItemStyle}) {
           provided.draggableProps.style
         )}
       >
-        {item.content}
+        {item.name}
       </div>
     )}
   </Draggable>
