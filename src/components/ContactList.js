@@ -29,7 +29,7 @@ function ContactList({items}) {
         style={getListStyle(snapshot.isDraggingOver)}
       >
         {items.map((item, index) => (
-          <ContactCard index={index} item={item} getItemStyle={getItemStyle}/>
+          <ContactCard key={`${item}-${index}`} index={index} item={item} getItemStyle={getItemStyle}/>
         ))}
         {provided.placeholder}
       </div>
