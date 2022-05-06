@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ContactList from './ContactList';
+import AddButton from './AddButton';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -37,6 +38,7 @@ function MainContainer() {
 	return (
 		<MainWrapper>
 			<H1>People's List</H1>
+			<AddButton />
 			<ContactList contacts={contacts} setContacts={setContacts} />
 		</MainWrapper>
 	);
