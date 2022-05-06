@@ -13,12 +13,6 @@ const Navbar = styled.nav`
 	}
 `;
 
-const Main = styled.main`
-	margin: 0 auto;
-	padding: 5rem;
-	max-width: 1000px;
-`;
-
 const App = () => {
 	return (
 		<>
