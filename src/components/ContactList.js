@@ -1,6 +1,7 @@
 import React from 'react'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ContactCard from './ContactCard';
+import styled from 'styled-components';
 
 const reorder = (list, startIndex, endIndex) => {
 	const result = Array.from(list);
@@ -9,21 +10,24 @@ const reorder = (list, startIndex, endIndex) => {
 	return result;
 };
 
+const ListContainer = styled.ul`
+	padding: 0 5px;
+	list-style: none;
+`;
 
-function ContactList({items, setItems}) {
+function ContactList({contacts, setContacts}) {
 
     const getItemStyle = (isDragging, draggableStyle) => ({
         userSelect: "none",
-        padding: "16px",
-        margin: `0 0 16 0`,
-        background: isDragging ? "lightgreen" : "grey",
+        padding: "1rem",
+        margin: "1rem",
+        background: isDragging ? "lightgrey" : "white",
         ...draggableStyle,
       });
       
       const getListStyle = (isDraggingOver) => ({
-        background: isDraggingOver ? "lightblue" : "lightgrey",
+        background: isDraggingOver ? "white" : "white",
         padding: "16px",
-        width: 250,
       }); 
 
       const onDragEnd = (result) => {
@@ -31,8 +35,8 @@ function ContactList({items, setItems}) {
           return;
         }
     
-        const reorderedItems = reorder(items, result.source.index, result.destination.index);
-        setItems(reorderedItems);
+        const reorderedItems = reorder(contacts, result.source.index, result.destination.index);
+        setContacts(reorderedItems);
       };
 
 
@@ -40,16 +44,16 @@ function ContactList({items, setItems}) {
     <DragDropContext onDragEnd={onDragEnd}>
     <Droppable droppableId="droppable">
     {(provided, snapshot) => (
-      <div
+      <ListContainer
         {...provided.droppableProps}
         ref={provided.innerRef}
         style={getListStyle(snapshot.isDraggingOver)}
       >
-        {items.map((item, index) => (
-          <ContactCard key={`${item}-${index}`} index={index} item={item} getItemStyle={getItemStyle}/>
+        {contacts.map((contact, index) => (
+          <ContactCard key={`${contact}-${index}`} index={index} contact={contact} getItemStyle={getItemStyle}/>
         ))}
         {provided.placeholder}
-      </div>
+      </ListContainer>
     )}
   </Droppable>
   </DragDropContext>
