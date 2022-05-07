@@ -50,7 +50,7 @@ function ContactCard({ contact, index, getItemStyle }) {
 					</Card>
 				)}
 			</Draggable>
-			<PortalModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+			<PortalModal title="Personal Information" isOpen={isOpen} onClose={() => setIsOpen(false)}>
 				<ContactDetails contact={contact} />
 			</PortalModal>
 		</>

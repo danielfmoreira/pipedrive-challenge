@@ -6,9 +6,21 @@ const ImgAvatar = styled.img`
 `;
 
 
-function Avatar({ width, src }) {
+function Avatar({ width, src, initials }) {
+  
+	let hasPicture;
+	if (src !== "") {
+		hasPicture = false;
+	} else {
+		hasPicture = true;
+	}
+
+
+
   return (
-    <ImgAvatar width={width} src={src}/>
+    <>
+    {hasPicture ? <p>{initials}</p>: <ImgAvatar width={width} src={src}/> }
+    </>
   )
 }
 

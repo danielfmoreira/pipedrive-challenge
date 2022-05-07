@@ -14,29 +14,49 @@ const BackgroundOverlay = styled.div`
 	place-items: center;
 `;
 
-const ModalBox = styled.div`
+const ModalBox = styled.section`
 	position: relative;
-	z-index: 10;
 	border: 1px solid lightgrey;
 	background-color: #fff;
 	width: 400px;
 	min-height: 400px;
-	padding: 1.5rem;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-between;
+
+	header {
+		background-color: lightgrey;
+		padding: 0.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	main {
+		flex-grow: 1;
+	}
+	button {
+		padding: 3px 5px;
+	}
+	footer {
+		position: absolute:
+		top: 0;
+		background-color: red;
+	}
 `;
 
-const CloseBtn = styled(MdClose)`
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-`;
-
-const PortalModal = ({ children, isOpen, onClose }) => {
+const PortalModal = ({ children, isOpen, onClose, title }) => {
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
 		<BackgroundOverlay>
 			<ModalBox>
-				<CloseBtn className="close" onClick={onClose} />
-				{children}
+				<header>
+					<h2>{title ? title : 'Details'}</h2>
+					<button onClick={onClose}>X</button>
+				</header>
+				<main>{children}</main>
+				<footer>
+					<button onClick={onClose}>Back</button>
+				</footer>
 			</ModalBox>
 		</BackgroundOverlay>,
 		document.getElementById('portal')
