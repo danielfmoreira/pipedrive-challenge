@@ -21,12 +21,13 @@ const ModalBox = styled.div`
 	background-color: #fff;
 	width: 400px;
 	min-height: 400px;
+	padding: 1.5rem;
 `;
 
 const CloseBtn = styled(MdClose)`
 	position: absolute;
-	top: 0px;
-	right: 0px;
+	top: 1rem;
+	right: 1rem;
 `;
 
 const PortalModal = ({ children, isOpen, onClose }) => {

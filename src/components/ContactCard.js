@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-import ContactModal from './ContactModal';
 import PortalModal from './PortalModal';
 import { IoBusinessOutline } from 'react-icons/io5';
 import Avatar from './Avatar';
@@ -29,13 +28,8 @@ const CardInfo = styled.div`
 `;
 
 function ContactCard({ contact, index, getItemStyle }) {
-	const [showModal, setShowModal] = useState(false);
+	const [isOpen, setIsOpen] = useState(false)
 
-
-	const openModal = () => {
-		console.log(index);
-		setShowModal(!showModal);
-	};
 
 	return (
 		<>
@@ -46,7 +40,7 @@ function ContactCard({ contact, index, getItemStyle }) {
 						{...provided.draggableProps}
 						{...provided.dragHandleProps}
 						style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-						onClick={openModal}
+						onClick={() => setIsOpen(true)}
 					>
 						<CardInfo>
 							<h2>{contact.name}</h2>
@@ -56,7 +50,9 @@ function ContactCard({ contact, index, getItemStyle }) {
 					</Card>
 				)}
 			</Draggable>
-			<ContactModal showModal={showModal} setShowModal={setShowModal} contact={contact} />
+			<PortalModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+				<ContactDetails contact={contact} />
+			</PortalModal>
 		</>
 	);
 }

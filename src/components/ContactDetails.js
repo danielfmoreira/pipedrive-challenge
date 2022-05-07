@@ -1,9 +1,14 @@
-import React from 'react'
+import styled from 'styled-components'
 
-function ContactDetails() {
-  return (
-    <div>ContactDetails</div>
-  )
+
+
+function ContactDetails({ contact }) {
+	return (
+		<>
+			<div>ContactDetails</div>
+			<h2>{contact.name}</h2>
+		</>
+	);
 }
 
-export default ContactDetails
+export default ContactDetails;
