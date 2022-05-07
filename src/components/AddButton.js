@@ -4,7 +4,7 @@ import AddForm from './AddForm';
 import PortalModal from './PortalModal';
 
 const Button = styled.button`
-	background-color: blue;
+	background-color: ${({ theme }) => theme.colors.green};
 	padding: 0.5rem 1rem;
 `;
 
@@ -14,7 +14,9 @@ function AddButton() {
 	return (
 		<>
 			<Button onClick={() => setIsOpen(true)}>Add Contact</Button>
-			<PortalModal isOpen={isOpen} onClose={() => setIsOpen(false)}><AddForm /></PortalModal>
+			<PortalModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+				<AddForm />
+			</PortalModal>
 		</>
 	);
 }

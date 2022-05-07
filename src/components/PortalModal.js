@@ -15,39 +15,43 @@ const BackgroundOverlay = styled.div`
 `;
 
 const ModalBox = styled.section`
-	position: relative;
-	border: 1px solid lightgrey;
+	border: 1px solid ${({ theme }) => theme.colors.lightgrey};
+	border-radius: 4px;
 	background-color: #fff;
-	width: 400px;
-	min-height: 400px;
+	min-width: 400px;
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: space-between;
 
 	header {
-		background-color: lightgrey;
-		padding: 0.5rem;
+		background-color: ${({ theme }) => theme.colors.lightgrey};
+		padding: 0.5rem 1rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 	main {
+		padding: 1rem;
 		flex-grow: 1;
+		display: flex;
+		flex-flow: column wrap;
+		justify-content: center;
+		align-items: center;
 	}
 	button {
 		padding: 3px 5px;
 	}
 	footer {
-		position: absolute:
-		top: 0;
-		background-color: red;
+		background-color: ${({ theme }) => theme.colors.lightgrey};
+		text-align: right;
+		padding: 0.5rem 1rem;
 	}
 `;
 
 const PortalModal = ({ children, isOpen, onClose, title }) => {
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
-		<BackgroundOverlay>
+		<BackgroundOverlay onClick={onClose}>
 			<ModalBox>
 				<header>
 					<h2>{title ? title : 'Details'}</h2>

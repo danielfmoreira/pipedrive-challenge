@@ -4,7 +4,7 @@ import { useState } from 'react';
 const Input = styled.input``;
 
 const SubmitBtn = styled.button`
-	background-color: blue;
+	background-color: ${({ theme }) => theme.colors.blue};;
 `;
 const Form = styled.form`
 	padding: 1rem;
