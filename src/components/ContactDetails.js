@@ -35,17 +35,8 @@ const Info = styled.p`
     color: ${({ theme }) => theme.colors.grey};
 `;
 
-function ContactDetails({ contact }) {
-	const hasPicture = contact.picture_id ? true : false;
+function ContactDetails({ contact , hasPicture, initials}) {
 
-	let initials;
-	if (contact.last_name) {
-		initials = contact.first_name[0] + contact.last_name[0];
-	} else {
-		initials = contact.first_name[0] + contact.first_name[1];
-	}
-
-    console.log(contact)
 
 	return (
 		<Box>

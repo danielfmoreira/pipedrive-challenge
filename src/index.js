@@ -5,6 +5,16 @@ import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import { MdSportsRugby } from 'react-icons/md';
 
+const theme = {
+	colors: {
+		lightgrey: 'rgb(247,247,247)',
+		grey: 'rgb(169,169,169)',
+		lightblue: 'rgb(222,234,250)',
+		blue: 'rgb(59,129,227)',
+		green: 'rgb(60, 179, 113)',
+	},
+};
+
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -12,17 +22,19 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: 'Open Sans', sans-serif;
   }
+  h1 {
+	font-size: 1.5rem;
+  }
+  h2 {
+	  font-size: 1.2rem;
+  }
+  button {
+	  border: none;
+	  border-radius: 2px;
+	  background-color: rgb(60, 179, 113);
+	  padding: 1rem 1.5rem;
+  }
 `;
-
-const theme = {
-	colors: {
-		lightgrey: 'rgb(220,220,220)',
-		grey: 'rgb(169,169,169)',
-		lightblue: 'rgb(222,234,250)',
-		blue: 'rgb(59,129,227)',
-		green: 'rgb(60, 179, 113)',
-	},
-};
 
 ReactDOM.render(
 	<React.StrictMode>

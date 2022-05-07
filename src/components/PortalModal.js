@@ -22,6 +22,7 @@ const ModalBox = styled.section`
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: space-between;
+	z-index: 100;
 
 	header {
 		background-color: ${({ theme }) => theme.colors.lightgrey};
@@ -38,9 +39,6 @@ const ModalBox = styled.section`
 		justify-content: center;
 		align-items: center;
 	}
-	button {
-		padding: 3px 5px;
-	}
 	footer {
 		background-color: ${({ theme }) => theme.colors.lightgrey};
 		text-align: right;
@@ -48,18 +46,26 @@ const ModalBox = styled.section`
 	}
 `;
 
+const Button = styled.button`
+	padding: 3px 10px;
+	background-color: ${(props) => props.color || 'white'};
+	border: ${(props) => props.border || '1px solid grey'};
+`;
+
 const PortalModal = ({ children, isOpen, onClose, title }) => {
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
-		<BackgroundOverlay onClick={onClose}>
+		<BackgroundOverlay>
 			<ModalBox>
 				<header>
 					<h2>{title ? title : 'Details'}</h2>
-					<button onClick={onClose}>X</button>
+					<Button color="transparent" border="none" onClick={onClose}>
+						X
+					</Button>
 				</header>
 				<main>{children}</main>
 				<footer>
-					<button onClick={onClose}>Back</button>
+					<Button onClick={onClose}>Back</Button>
 				</footer>
 			</ModalBox>
 		</BackgroundOverlay>,

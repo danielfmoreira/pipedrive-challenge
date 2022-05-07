@@ -21,7 +21,7 @@ function ContactList({contacts, setContacts}) {
         userSelect: "none",
         padding: "1rem",
         margin: "1rem",
-        background: isDragging ? "lightgrey" : "white",
+        background: isDragging ? "rgb(220,220,220)" : "white",
         ...draggableStyle,
       });
       

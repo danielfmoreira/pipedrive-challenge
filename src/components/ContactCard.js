@@ -29,7 +29,14 @@ const CardInfo = styled.div`
 
 function ContactCard({ contact, index, getItemStyle }) {
 	const [isOpen, setIsOpen] = useState(false)
+	const hasPicture = contact.picture_id ? true : false;
 
+	let initials;
+	if (contact.last_name) {
+		initials = contact.first_name[0] + contact.last_name[0];
+	} else {
+		initials = contact.first_name[0] + contact.first_name[1];
+	}
 
 	return (
 		<>
@@ -43,15 +50,16 @@ function ContactCard({ contact, index, getItemStyle }) {
 						onClick={() => setIsOpen(true)}
 					>
 						<CardInfo>
+							<h1>{index + 1}</h1>
 							<h2>{contact.name}</h2>
 							<IoBusinessOutline /> <span>{contact.org_name}</span>
 						</CardInfo>
-						<Avatar width="60px" src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000" />
+						<Avatar width="60px" src={hasPicture ? contact.picture_id.pictures[128] : ''} initials={initials} />
 					</Card>
 				)}
 			</Draggable>
 			<PortalModal title="Personal Information" isOpen={isOpen} onClose={() => setIsOpen(false)}>
-				<ContactDetails contact={contact} />
+				<ContactDetails initials={initials} hasPicture={hasPicture} contact={contact} />
 			</PortalModal>
 		</>
 	);

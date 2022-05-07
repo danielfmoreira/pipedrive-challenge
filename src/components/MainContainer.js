@@ -14,20 +14,21 @@ const MainWrapper = styled.main`
 `;
 
 const H1 = styled.h1`
-	font-size: 1.5rem;
 	border-bottom: 1px solid lightgrey;
 	padding: 20px 0;
 `;
 
 function MainContainer() {
 	const [contacts, setContacts] = useState([]);
+	const [isUpdated, setIsUpdate] = useState(true);
+	
 	useEffect(() => {
 		getContacts();
-	}, []);
+	}, [isUpdated]);
 
 	const getContacts = async () => {
 		try {
-			const response = await axios.get(`${API_URL}/persons/?api_token=${KEY}`);
+			const response = await axios.get(`${API_URL}/persons?limit=200&api_token=${KEY}`);
 			console.log(response.data)
 			setContacts(response.data.data);
 		} catch (error) {
