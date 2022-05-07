@@ -41,7 +41,6 @@ function ContactModal({ showModal, setShowModal, contact }) {
 			{showModal ? (
 				<BackgroundOverlay ref={modalRef} onClick={closeModal}>
 					<ModalBox>
-						<p>{contact.name}</p>
 						<CloseBtn
 							onClick={() => {
 								setShowModal(!showModal);

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import AddForm from './AddForm';
+import PortalModal from './PortalModal';
 
 const Button = styled.button`
 	background-color: blue;
@@ -8,17 +9,12 @@ const Button = styled.button`
 `;
 
 function AddButton() {
-	const [showModal, setShowModal] = useState(false);
-
-	const handleClick = (e) => {
-		e.preventDefault();
-		setShowModal(!showModal);
-	};
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<>
-			<Button onClick={handleClick}>Add Contact</Button>
-			<AddForm showModal={showModal} setShowModal={setShowModal} />
+			<Button onClick={() => setIsOpen(true)}>Add Contact</Button>
+			<PortalModal isOpen={isOpen} onClose={() => setIsOpen(false)}><AddForm /></PortalModal>
 		</>
 	);
 }

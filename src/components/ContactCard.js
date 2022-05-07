@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ContactModal from './ContactModal';
+import PortalModal from './PortalModal';
 import { IoBusinessOutline } from 'react-icons/io5';
 import Avatar from './Avatar';
+import ContactDetails from './ContactDetails';
+
 
 const Card = styled.li`
 	border: 1px solid lightgrey;
@@ -27,6 +30,7 @@ const CardInfo = styled.div`
 
 function ContactCard({ contact, index, getItemStyle }) {
 	const [showModal, setShowModal] = useState(false);
+
 
 	const openModal = () => {
 		console.log(index);

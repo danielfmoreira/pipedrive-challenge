@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -10,14 +10,12 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: 'Open Sans', sans-serif;
   }
-`
-
+`;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GlobalStyle />
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<GlobalStyle />
+			<App />
+	</React.StrictMode>,
+	document.getElementById('root')
 );
-

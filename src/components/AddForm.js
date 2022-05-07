@@ -6,7 +6,9 @@ function AddForm() {
     const [lastName, setLastName] = useState('')
     
   return (
+    <>
     <div>AddForm</div>
+    </>
   )
 }
 

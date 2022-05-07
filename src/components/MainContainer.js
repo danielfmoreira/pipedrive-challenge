@@ -21,7 +21,6 @@ const H1 = styled.h1`
 
 function MainContainer() {
 	const [contacts, setContacts] = useState([]);
-
 	useEffect(() => {
 		getContacts();
 	}, []);
@@ -29,6 +28,7 @@ function MainContainer() {
 	const getContacts = async () => {
 		try {
 			const response = await axios.get(`${API_URL}/persons/?api_token=${KEY}`);
+			console.log(response.data)
 			setContacts(response.data.data);
 		} catch (error) {
 			console.log(error);
