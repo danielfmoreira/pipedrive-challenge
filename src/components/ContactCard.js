@@ -6,6 +6,7 @@ import { IoBusinessOutline } from 'react-icons/io5';
 import Avatar from './Avatar';
 import ContactDetails from './ContactDetails';
 import DeleteButton from './DeleteButton';
+import EditButton from './EditButton'
 
 
 const Card = styled.li`
@@ -58,9 +59,12 @@ function ContactCard({ contact, index, getItemStyle }) {
 					</Card>
 				)}
 			</Draggable>
-			<PortalModal title="Personal Information" isOpen={isOpen} onClose={() => setIsOpen(false)}>
+			<PortalModal title="Personal Information" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
 				<ContactDetails initials={initials} hasPicture={hasPicture} contact={contact} />
-				<DeleteButton personId={contact.id} onClose={() => setIsOpen(false)}/>
+				<div>
+				<DeleteButton personId={contact.id} closeModal={() => setIsOpen(false)}/>
+				<EditButton person={contact} closeModal={() => setIsOpen(false)}/>
+				</div>
 			</PortalModal>
 		</>
 	);

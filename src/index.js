@@ -4,7 +4,6 @@ import App from './App';
 import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import { ContactListWrapper } from './context/contacts.context';
-import { ModalWrapper } from './context/modal.context';
 
 const theme = {
 	colors: {
@@ -41,10 +40,8 @@ ReactDOM.render(
 	<React.StrictMode>
 		<ThemeProvider theme={theme}>
 				<ContactListWrapper>
-				<ModalWrapper>
 					<GlobalStyle />
 					<App />
-					</ModalWrapper>
 				</ContactListWrapper>
 		</ThemeProvider>
 	</React.StrictMode>,

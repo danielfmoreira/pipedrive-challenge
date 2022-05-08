@@ -38,30 +38,41 @@ const Form = styled.form`
 	}
 `;
 
-function AddForm( {closeModal}) {
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [emailLabel, setEmailLabel] = useState('work');
-	const [phone, setPhone] = useState('');
-	const [phoneLabel, setPhoneLabel] = useState('work');
-	const [groups, setGroups] = useState('');
-	const [location, setLocation] = useState('');
-	const [assistant, setAssistant] = useState('');
-	const [organization, setOrganization] = useState('');
+function EditForm({ person, closeModal }) {
+	const [name, setName] = useState(person.name);
+	const [email, setEmail] = useState(person.email[0].value);
+	const [emailLabel, setEmailLabel] = useState(person.email[0].label);
+	const [phone, setPhone] = useState(person.phone[0].value);
+	const [phoneLabel, setPhoneLabel] = useState(person.phone[0].label);
+	const [groups, setGroups] = useState(person.e17b7fccc25fc6a50263ba9421b9d0089b78ab86);
+	const [location, setLocation] = useState(person.org_id ? person.org_id.address : '');
+	const [assistant, setAssistant] = useState(person.ead969773b1c36b82991c53b93516ee07556666e);
+	const [organization, setOrganization] = useState(person.org_name);
 	const [errorMessage, setErrorMessage] = useState('');
 
 	const { setIsUpdated } = useContext(ContactListContext);
+    console.log(person)
 
 	const handleSubmit = async (e) => {
 		try {
 			e.preventDefault();
-			console.log('submitting');
-			//const name = `${firstName} ${lastName}`;
 
-			// Create a organization and add location
-			let orgId = ""
+			const personId = person.id;
+            let orgId = person.org_id ? person.org_id.value : ""
 
-			if(organization) {
+            //If organization exists and needs update
+            if(person.org_id) {
+                if(organization !== person.org_id.name || location !== person.org_id.address){
+                    await axios.put(`${API_URL}/organizations/${person.org_id.value}?api_token=${KEY}`, {
+                        name: organization,
+                        address: location,
+                    });
+                }
+            }
+
+            //If organization does not exist, create one and add location
+			if(!person.org_id && organization) {
+
 			const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
 				name: organization,
 			});
@@ -69,11 +80,13 @@ function AddForm( {closeModal}) {
 			orgId = newOrganization.data.data.id;
 
 			await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
-				address: location,
+                name: name,
+                address: location,
 			});
 		}
+
 			// Create a person
-			const newPerson = {
+			const updatedPerson = {
 				name: name,
 				email: [
 					{
@@ -89,27 +102,15 @@ function AddForm( {closeModal}) {
 						label: phoneLabel,
 					},
 				],
-				org_id: orgId,
+                org_id: orgId,
 				ead969773b1c36b82991c53b93516ee07556666e: assistant,
 				e17b7fccc25fc6a50263ba9421b9d0089b78ab86: groups,
 			};
 
-			await axios.post(`${API_URL}/persons?api_token=${KEY}`, newPerson);
+		    await axios.put(`${API_URL}/persons/${personId}?api_token=${KEY}`, updatedPerson);
 
-			//Clear the form
-			setName('');
-			setPhone('');
-			setPhoneLabel('work');
-			setEmail('');
-			setEmailLabel('work');
-			setOrganization('');
-			setAssistant('');
-			setGroups('');
-			setLocation('');
-
-
-			setIsUpdated(false)
-			closeModal()
+			setIsUpdated(false);
+			closeModal();
 
 			//Close Dialog
 		} catch (error) {
@@ -122,7 +123,7 @@ function AddForm( {closeModal}) {
 		<>
 			<Form id="add-person-form" onSubmit={handleSubmit}>
 				<label htmlFor="name">Name:</label>
-				<input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />					
+				<input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
 
 				<label htmlFor="organization">Organization:</label>
 				<input type="text" name="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} />
@@ -161,4 +162,4 @@ function AddForm( {closeModal}) {
 	);
 }
 
-export default AddForm;
+export default EditForm;

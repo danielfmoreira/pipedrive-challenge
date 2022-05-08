@@ -11,7 +11,7 @@ const DeleteBtn = styled.button`
 	color: #fff
 `
 
-function DeleteButton({ personId, onClose }) {
+function DeleteButton({ personId, closeModal }) {
 	const { setIsUpdated } = useContext(ContactListContext);
 
 	const handleDelete = async (e) => {
@@ -20,8 +20,8 @@ function DeleteButton({ personId, onClose }) {
 
 			await axios.delete(`${API_URL}/persons/${personId}?api_token=${KEY}`);
 			setIsUpdated(false);
-			onClose()
-			
+			closeModal()
+
 		} catch (error) {
 			console.log(error);
 		}
