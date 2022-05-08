@@ -4,6 +4,7 @@ import ContactCard from './ContactCard';
 import styled from 'styled-components';
 import { ContactListContext } from '../context/contacts.context';
 
+
 const reorder = (list, startIndex, endIndex) => {
 	const result = Array.from(list);
 	const [removed] = result.splice(startIndex, 1);
@@ -17,8 +18,9 @@ const ListContainer = styled.ul`
 `;
 
 function ContactList() {
-	const { contacts } = useContext(ContactListContext);
-	const { setContacts } = useContext(ContactListContext);
+	const { contacts, setContacts, allContacts } = useContext(ContactListContext);
+
+	const hasContacts = contacts.length > 0 ? true : false;
 
 	const getItemStyle = (isDragging, draggableStyle) => ({
 		userSelect: 'none',
@@ -43,18 +45,24 @@ function ContactList() {
 	};
 
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="droppable">
-				{(provided, snapshot) => (
-					<ListContainer {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
-						{contacts.map((contact, index) => (
-							<ContactCard key={`${contact}-${index}`} index={index} contact={contact} getItemStyle={getItemStyle} />
-						))}
-						{provided.placeholder}
-					</ListContainer>
-				)}
-			</Droppable>
-		</DragDropContext>
+		<>
+			{ hasContacts ? (
+				<DragDropContext onDragEnd={onDragEnd}>
+					<Droppable droppableId="droppable">
+						{(provided, snapshot) => (
+							<ListContainer {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+								{contacts.map((contact, index) => (
+									<ContactCard key={`${contact}-${index}`} index={index} contact={contact} getItemStyle={getItemStyle} />
+								))}
+								{provided.placeholder}
+							</ListContainer>
+						)}
+					</Droppable>
+				</DragDropContext>) :
+        (<>No Contact</>)
+
+			}
+		</>
 	);
 }
 
