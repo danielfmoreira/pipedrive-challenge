@@ -21,7 +21,7 @@ const ModalBox = styled.section`
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: space-between;
-	z-index: 100;
+	z-index: 999;
 
 	header {
 		background-color: ${({ theme }) => theme.colors.lightgrey};

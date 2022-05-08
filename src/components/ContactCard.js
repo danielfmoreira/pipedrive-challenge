@@ -5,6 +5,7 @@ import PortalModal from './PortalModal';
 import { IoBusinessOutline } from 'react-icons/io5';
 import Avatar from './Avatar';
 import ContactDetails from './ContactDetails';
+import DeleteButton from './DeleteButton';
 
 
 const Card = styled.li`
@@ -59,6 +60,7 @@ function ContactCard({ contact, index, getItemStyle }) {
 			</Draggable>
 			<PortalModal title="Personal Information" isOpen={isOpen} onClose={() => setIsOpen(false)}>
 				<ContactDetails initials={initials} hasPicture={hasPicture} contact={contact} />
+				<DeleteButton personId={contact.id}/>
 			</PortalModal>
 		</>
 	);
