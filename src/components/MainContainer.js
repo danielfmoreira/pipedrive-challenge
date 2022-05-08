@@ -9,7 +9,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const MainWrapper = styled.main`
 	margin: 0 auto;
-	padding: 5rem;
+	padding: 3rem;
 	max-width: 1000px;
 `;
 
@@ -21,7 +21,7 @@ const H1 = styled.h1`
 function MainContainer() {
 	const [contacts, setContacts] = useState([]);
 	const [isUpdated, setIsUpdate] = useState(true);
-	
+
 	useEffect(() => {
 		getContacts();
 	}, [isUpdated]);
@@ -30,7 +30,7 @@ function MainContainer() {
 		try {
 			const response = await axios.get(`${API_URL}/persons?limit=200&api_token=${KEY}`);
 			console.log(response.data)
-			setContacts(response.data.data);
+			setContacts(response.data.data.reverse());
 		} catch (error) {
 			console.log(error);
 		}

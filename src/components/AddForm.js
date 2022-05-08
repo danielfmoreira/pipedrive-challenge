@@ -5,40 +5,45 @@ import axios from 'axios';
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
 
-const Input = styled.input`
-	height: 2rem;
-	padding: 1rem;
-`;
-
-const Form = styled.form`
-	width: 100%;
-	display: grid;
-	gap: 1rem;
-	grid-template-columns: 1fr 3fr;
-	grid-rows: auto;
-
-	input {
-		height: 2rem;
-		padding: 1rem;
-	}
-`;
-
-const Label = styled.p`
-	text-align: right;
-	font-weight: 600;
-`;
-
 const Row = styled.div`
 	display: flex;
 	flex-flow: row wrap;
 	gap: 0.5rem;
+	justify-content: space-between;
+	input,
+	select {
+		width: 48%;
+	}
+`;
+
+const Form = styled.form`
+	width: 100%;
+	display: flex;
+	flex-flow: column wrap;
+	padding: 1rem 0;
+	input,
+	select {
+		height: 2.5rem;
+		padding: 0.5rem;
+		color: #000;
+		border: 1px solid ${({ theme }) => theme.colors.grey};
+	}
+	label {
+		text-align: left;
+		font-size: 0.9rem;
+		font-weight: 600;
+		margin: 10px 0 5px;
+		color: ${({ theme }) => theme.colors.grey};
+	}
 `;
 
 function AddForm() {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
+	const [emailLabel, setEmailLabel] = useState('work');
 	const [phone, setPhone] = useState('');
+	const [phoneLabel, setPhoneLabel] = useState('work');
 	const [groups, setGroups] = useState('');
 	const [location, setLocation] = useState('');
 	const [assistant, setAssistant] = useState('');
@@ -48,6 +53,7 @@ function AddForm() {
 	const handleSubmit = async (e) => {
 		try {
 			e.preventDefault();
+			console.log('submitting');
 			const name = `${firstName} ${lastName}`;
 
 			// Create a organization and add location
@@ -57,7 +63,7 @@ function AddForm() {
 
 			const orgId = newOrganization.data.data.id;
 
-			const updated = await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
+			await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
 				address: location,
 			});
 
@@ -68,14 +74,14 @@ function AddForm() {
 					{
 						value: email,
 						primary: true,
-						label: 'work',
+						label: emailLabel,
 					},
 				],
 				phone: [
 					{
 						value: phone,
 						primary: true,
-						label: 'work',
+						label: phoneLabel,
 					},
 				],
 				org_id: orgId,
@@ -89,14 +95,15 @@ function AddForm() {
 			setFirstName('');
 			setLastName('');
 			setPhone('');
+			setPhoneLabel('work');
 			setEmail('');
+			setEmailLabel('work');
 			setOrganization('');
 			setAssistant('');
 			setGroups('');
 			setLocation('');
 
 			//Close Dialog
-			
 		} catch (error) {
 			console.log(error);
 			setErrorMessage('Something went wrong. Try again');
@@ -105,32 +112,44 @@ function AddForm() {
 
 	return (
 		<>
-			<Form onSubmit={handleSubmit}>
-				<Label>Name:</Label>
+			<Form id="add-person-form" onSubmit={handleSubmit}>
+				<label htmlFor="name">Name:</label>
 				<Row>
-					<Input type="text" placeholder="First Name" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-					<Input type="text" placeholder="Last Name" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+					<input type="text" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+					<input type="text" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
 				</Row>
 
-				<Label>Phone:</Label>
-				<Input type="tel" placeholder="Phone" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+				<label htmlFor="organization">Organization:</label>
+				<input type="text" name="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} />
 
-				<Label>Email:</Label>
-				<Input type="email" placeholder="Email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+				<label htmlFor="phone">Phone:</label>
+				<Row>
+					<input type="tel" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+					<select name="phoneLabel" defaultValue={phoneLabel} onChange={(e) => setPhoneLabel(e.target.value)}>
+						<option value="work">Work</option>
+						<option value="home">Home</option>
+						<option value="mobile">Mobile</option>
+						<option value="other">Other</option>
+					</select>
+				</Row>
+				<label htmlFor="email">Email:</label>
+				<Row>
+					<input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+					<select name="emailLabel" defaultValue={emailLabel} onChange={(e) => setEmailLabel(e.target.value)}>
+						<option value="work">Work</option>
+						<option value="home">Home</option>
+						<option value="mobile">Mobile</option>
+						<option value="other">Other</option>
+					</select>
+				</Row>
+				<label htmlFor="assistant">Assistant:</label>
+				<input type="text" name="assistant" value={assistant} onChange={(e) => setAssistant(e.target.value)} />
 
-				<Label>Organization:</Label>
-				<Input type="text" placeholder="Organization" name="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} />
+				<label htmlFor="groups">Groups:</label>
+				<input type="text" name="groups" value={groups} onChange={(e) => setGroups(e.target.value)} />
 
-				<Label>Assistant:</Label>
-				<Input type="text" placeholder="Assistant" name="assistant" value={assistant} onChange={(e) => setAssistant(e.target.value)} />
-
-				<Label>Groups:</Label>
-				<Input type="text" placeholder="Groups" name="groups" value={groups} onChange={(e) => setGroups(e.target.value)} />
-
-				<Label>Location:</Label>
-				<Input type="text" placeholder="Location" name="location" value={location} onChange={(e) => setLocation(e.target.value)} />
-
-				<button type="submit">Add New</button>
+				<label htmlFor="location">Location:</label>
+				<input type="text" name="location" value={location} onChange={(e) => setLocation(e.target.value)} />
 				{errorMessage && <p>{errorMessage}</p>}
 			</Form>
 		</>

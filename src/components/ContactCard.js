@@ -50,7 +50,6 @@ function ContactCard({ contact, index, getItemStyle }) {
 						onClick={() => setIsOpen(true)}
 					>
 						<CardInfo>
-							<h1>{index + 1}</h1>
 							<h2>{contact.name}</h2>
 							<IoBusinessOutline /> <span>{contact.org_name}</span>
 						</CardInfo>

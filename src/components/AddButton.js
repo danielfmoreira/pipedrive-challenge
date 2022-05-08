@@ -9,6 +9,10 @@ const Button = styled.button`
 	color: #fff;
 `;
 
+const SubmitFormButton = styled.button`
+	color: #fff;
+`
+
 function AddButton() {
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -17,6 +21,7 @@ function AddButton() {
 			<Button onClick={() => setIsOpen(true)}>+ Person</Button>
 			<PortalModal title="Add Contact" isOpen={isOpen} onClose={() => setIsOpen(false)}>
 				<AddForm />
+				<SubmitFormButton form="add-person-form" type="submit">Save</SubmitFormButton>
 			</PortalModal>
 		</>
 	);

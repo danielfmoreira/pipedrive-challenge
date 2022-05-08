@@ -9,8 +9,8 @@ const ImgAvatar = styled.img`
 const InitialsContainer = styled.p`
 	background-color: ${({ theme }) => theme.colors.lightblue};
 	color: ${({ theme }) => theme.colors.blue};
-  font-size: 1rem;
-  font-weight: 600;
+	font-size: 1rem;
+	font-weight: 600;
 	border-radius: 50%;
 	width: ${(props) => props.width || '50px'};
 	height: ${(props) => props.width || '50px'};

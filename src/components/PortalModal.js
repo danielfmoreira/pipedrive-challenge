@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { MdClose } from 'react-icons/md';
 
 const BackgroundOverlay = styled.div`
 	width: 100%;
@@ -26,13 +25,13 @@ const ModalBox = styled.section`
 
 	header {
 		background-color: ${({ theme }) => theme.colors.lightgrey};
-		padding: 0.5rem 1rem;
+		padding: 0.5rem 0 0.5rem 1.2rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 	main {
-		padding: 1rem;
+		padding: 1.2rem;
 		flex-grow: 1;
 		display: flex;
 		flex-flow: column wrap;
@@ -42,12 +41,15 @@ const ModalBox = styled.section`
 	footer {
 		background-color: ${({ theme }) => theme.colors.lightgrey};
 		text-align: right;
-		padding: 0.5rem 1rem;
+		padding: 0.5rem 1.2rem;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: flex-end;
+		gap: 1rem;
 	}
 `;
 
 const Button = styled.button`
-	padding: 3px 10px;
 	background-color: ${(props) => props.color || 'white'};
 	border: ${(props) => props.border || '1px solid grey'};
 `;
@@ -63,9 +65,10 @@ const PortalModal = ({ children, isOpen, onClose, title }) => {
 						X
 					</Button>
 				</header>
-				<main>{children}</main>
+				<main>{children.length ? children[0] : children}</main>
 				<footer>
 					<Button onClick={onClose}>Back</Button>
+					{children.length ? children[1] : null}
 				</footer>
 			</ModalBox>
 		</BackgroundOverlay>,
