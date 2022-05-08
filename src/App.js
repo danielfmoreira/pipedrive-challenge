@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MainContainer from './components/MainContainer';
 import logo from './assets/pipedrive-logo.png';
 
+
 const Navbar = styled.nav`
 	padding: 1rem;
 	background-color: rgb(64, 67, 70);

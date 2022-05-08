@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import ContactCard from './ContactCard';
 import styled from 'styled-components';
-import { ContactListContext } from '../context/ContactList.context';
+import { ContactListContext } from '../context/contacts.context';
 
 
 const reorder = (list, startIndex, endIndex) => {

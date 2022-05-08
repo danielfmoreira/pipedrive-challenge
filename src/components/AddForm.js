@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useContext } from 'react';
 import axios from 'axios';
-import { ContactListContext } from '../context/ContactList.context';
+import { ContactListContext } from '../context/contacts.context';
 
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
@@ -38,7 +38,7 @@ const Form = styled.form`
 	}
 `;
 
-function AddForm() {
+function AddForm( {closeModal}) {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
@@ -111,6 +111,7 @@ function AddForm() {
 
 
 			setIsUpdated(false)
+			closeModal()
 
 			//Close Dialog
 		} catch (error) {

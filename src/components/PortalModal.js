@@ -53,7 +53,7 @@ const Button = styled.button`
 	border: ${(props) => props.border || '1px solid grey'};
 `;
 
-const PortalModal = ({ children, title, isOpen, onClose }) => {
+const PortalModal = ({ children, title, isOpen, closeModal }) => {
 
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
@@ -61,13 +61,13 @@ const PortalModal = ({ children, title, isOpen, onClose }) => {
 			<ModalBox>
 				<header>
 					<h2>{title ? title : 'Details'}</h2>
-					<Button color="transparent" border="none" onClick={onClose}>
+					<Button color="transparent" border="none" onClick={closeModal}>
 						X
 					</Button>
 				</header>
 				<main>{children.length ? children[0] : children}</main>
 				<footer>
-					<Button onClick={onClose}>Back</Button>
+					<Button onClick={closeModal}>Back</Button>
 					{children.length ? children[1] : null}
 				</footer>
 			</ModalBox>

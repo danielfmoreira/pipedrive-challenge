@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider } from 'styled-components';
-import { ContactListWrapper } from './context/ContactList.context';
+import { ContactListWrapper } from './context/contacts.context';
+import { ModalWrapper } from './context/modal.context';
 
 const theme = {
 	colors: {
@@ -39,10 +40,12 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
 	<React.StrictMode>
 		<ThemeProvider theme={theme}>
-			<ContactListWrapper>
-				<GlobalStyle />
-				<App />
-			</ContactListWrapper>
+				<ContactListWrapper>
+				<ModalWrapper>
+					<GlobalStyle />
+					<App />
+					</ModalWrapper>
+				</ContactListWrapper>
 		</ThemeProvider>
 	</React.StrictMode>,
 	document.getElementById('root')

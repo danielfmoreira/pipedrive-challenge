@@ -3,7 +3,7 @@ import ContactList from './ContactList';
 import AddButton from './AddButton';
 import axios from 'axios';
 import styled from 'styled-components';
-import { ContactListContext } from '../context/ContactList.context';
+import { ContactListContext } from '../context/contacts.context';
 
 
 const KEY = process.env.REACT_APP_KEY;

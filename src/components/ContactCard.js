@@ -60,7 +60,7 @@ function ContactCard({ contact, index, getItemStyle }) {
 			</Draggable>
 			<PortalModal title="Personal Information" isOpen={isOpen} onClose={() => setIsOpen(false)}>
 				<ContactDetails initials={initials} hasPicture={hasPicture} contact={contact} />
-				<DeleteButton personId={contact.id}/>
+				<DeleteButton personId={contact.id} onClose={() => setIsOpen(false)}/>
 			</PortalModal>
 		</>
 	);
