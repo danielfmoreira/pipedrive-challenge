@@ -51,39 +51,38 @@ function EditForm({ person, closeModal }) {
 	const [errorMessage, setErrorMessage] = useState('');
 
 	const { setIsUpdated } = useContext(ContactListContext);
-    console.log(person)
+	console.log(person);
 
 	const handleSubmit = async (e) => {
 		try {
 			e.preventDefault();
 
 			const personId = person.id;
-            let orgId = person.org_id ? person.org_id.value : ""
+			let orgId = person.org_id ? person.org_id.value : '';
 
-            //If organization exists and needs update
-            if(person.org_id) {
-                if(organization !== person.org_id.name || location !== person.org_id.address){
-                    await axios.put(`${API_URL}/organizations/${person.org_id.value}?api_token=${KEY}`, {
-                        name: organization,
-                        address: location,
-                    });
-                }
-            }
+			//If organization exists and needs update
+			if (person.org_id) {
+				if (organization !== person.org_id.name || location !== person.org_id.address) {
+					await axios.put(`${API_URL}/organizations/${person.org_id.value}?api_token=${KEY}`, {
+						name: organization,
+						address: location,
+					});
+				}
+			}
 
-            //If organization does not exist, create one and add location
-			if(!person.org_id && organization) {
+			//If organization does not exist, create one and add location
+			if (!person.org_id && organization) {
+				const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
+					name: organization,
+				});
 
-			const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
-				name: organization,
-			});
+				orgId = newOrganization.data.data.id;
 
-			orgId = newOrganization.data.data.id;
-
-			await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
-                name: name,
-                address: location,
-			});
-		}
+				await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
+					name: name,
+					address: location,
+				});
+			}
 
 			// Create a person
 			const updatedPerson = {
@@ -102,12 +101,12 @@ function EditForm({ person, closeModal }) {
 						label: phoneLabel,
 					},
 				],
-                org_id: orgId,
+				org_id: orgId,
 				ead969773b1c36b82991c53b93516ee07556666e: assistant,
 				e17b7fccc25fc6a50263ba9421b9d0089b78ab86: groups,
 			};
 
-		    await axios.put(`${API_URL}/persons/${personId}?api_token=${KEY}`, updatedPerson);
+			await axios.put(`${API_URL}/persons/${personId}?api_token=${KEY}`, updatedPerson);
 
 			setIsUpdated(false);
 			closeModal();

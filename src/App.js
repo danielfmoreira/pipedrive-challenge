@@ -3,6 +3,7 @@ import logo from './assets/pipedrive-logo.png';
 import ContactList from './components/ContactList';
 import AddButton from './components/AddButton';
 import SortBySelect from './components/SortBySelect';
+import SearchBar from './components/SearchBar';
 
 const Navbar = styled.nav`
 	padding: 1rem;
@@ -35,6 +36,7 @@ const App = () => {
 				<H1>People's List</H1>
 				<AddButton />
 				<SortBySelect />
+				<SearchBar />
 				<ContactList />
 			</MainWrapper>
 		</>

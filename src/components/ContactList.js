@@ -1,9 +1,8 @@
-import { useContext } from 'react'
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { useContext } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import ContactCard from './ContactCard';
 import styled from 'styled-components';
 import { ContactListContext } from '../context/contacts.context';
-
 
 const reorder = (list, startIndex, endIndex) => {
 	const result = Array.from(list);
@@ -18,50 +17,45 @@ const ListContainer = styled.ul`
 `;
 
 function ContactList() {
-  const { contacts } = useContext(ContactListContext)
-	const { setContacts } = useContext(ContactListContext)
+	const { contacts } = useContext(ContactListContext);
+	const { setContacts } = useContext(ContactListContext);
 
-    const getItemStyle = (isDragging, draggableStyle) => ({
-        userSelect: "none",
-        padding: "1rem",
-        margin: "1rem",
-        background: isDragging ? "rgb(220,220,220)" : "white",
-        ...draggableStyle,
-      });
-      
-      const getListStyle = (isDraggingOver) => ({
-        background: isDraggingOver ? "white" : "white",
-        padding: "16px",
-      }); 
+	const getItemStyle = (isDragging, draggableStyle) => ({
+		userSelect: 'none',
+		padding: '1rem',
+		margin: '1rem',
+		background: isDragging ? 'rgb(220,220,220)' : 'white',
+		...draggableStyle,
+	});
 
-      const onDragEnd = (result) => {
-        if (!result.destination) {
-          return;
-        }
-    
-        const reorderedItems = reorder(contacts, result.source.index, result.destination.index);
-        setContacts(reorderedItems);
-      };
+	const getListStyle = (isDraggingOver) => ({
+		background: isDraggingOver ? 'white' : 'white',
+		padding: '16px',
+	});
 
+	const onDragEnd = (result) => {
+		if (!result.destination) {
+			return;
+		}
 
-  return (
-    <DragDropContext onDragEnd={onDragEnd}>
-    <Droppable droppableId="droppable">
-    {(provided, snapshot) => (
-      <ListContainer
-        {...provided.droppableProps}
-        ref={provided.innerRef}
-        style={getListStyle(snapshot.isDraggingOver)}
-      >
-        {contacts.map((contact, index) => (
-          <ContactCard key={`${contact}-${index}`} index={index} contact={contact} getItemStyle={getItemStyle}/>
-        ))}
-        {provided.placeholder}
-      </ListContainer>
-    )}
-  </Droppable>
-  </DragDropContext>
-  )
+		const reorderedItems = reorder(contacts, result.source.index, result.destination.index);
+		setContacts(reorderedItems);
+	};
+
+	return (
+		<DragDropContext onDragEnd={onDragEnd}>
+			<Droppable droppableId="droppable">
+				{(provided, snapshot) => (
+					<ListContainer {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+						{contacts.map((contact, index) => (
+							<ContactCard key={`${contact}-${index}`} index={index} contact={contact} getItemStyle={getItemStyle} />
+						))}
+						{provided.placeholder}
+					</ListContainer>
+				)}
+			</Droppable>
+		</DragDropContext>
+	);
 }
 
-export default ContactList
+export default ContactList;

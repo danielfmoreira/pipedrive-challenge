@@ -54,7 +54,6 @@ const Button = styled.button`
 `;
 
 const PortalModal = ({ children, title, isOpen, closeModal, setToggleEdit }) => {
-
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
 		<BackgroundOverlay>

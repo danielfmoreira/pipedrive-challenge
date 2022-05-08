@@ -39,10 +39,10 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
 	<React.StrictMode>
 		<ThemeProvider theme={theme}>
-				<ContactListWrapper>
-					<GlobalStyle />
-					<App />
-				</ContactListWrapper>
+			<ContactListWrapper>
+				<GlobalStyle />
+				<App />
+			</ContactListWrapper>
 		</ThemeProvider>
 	</React.StrictMode>,
 	document.getElementById('root')

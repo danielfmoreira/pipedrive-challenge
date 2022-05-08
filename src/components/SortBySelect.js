@@ -26,7 +26,7 @@ function SortBySelect() {
 				break;
 			case 'last-modified':
 				const byLastModified = [...contacts].sort((a, b) => Date.parse(a.update_time) < Date.parse(b.update_time));
-				console.log(byLastModified)
+				console.log(byLastModified);
 				setContacts(byLastModified);
 				break;
 			default:

@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import { ContactListContext } from '../context/contacts.context';
-import styled from 'styled-components'
-
+import styled from 'styled-components';
 
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
 
 const DeleteBtn = styled.button`
-	color: #fff
-`
+	color: #fff;
+`;
 
 function DeleteButton({ personId, closeModal }) {
 	const { setIsUpdated } = useContext(ContactListContext);
@@ -20,8 +19,7 @@ function DeleteButton({ personId, closeModal }) {
 
 			await axios.delete(`${API_URL}/persons/${personId}?api_token=${KEY}`);
 			setIsUpdated(false);
-			closeModal()
-
+			closeModal();
 		} catch (error) {
 			console.log(error);
 		}

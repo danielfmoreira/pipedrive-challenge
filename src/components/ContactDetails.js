@@ -7,22 +7,22 @@ const Box = styled.section`
 	gap: 1rem;
 	grid-template-columns: 1fr 2fr;
 	grid-rows: auto;
-    padding: 1rem 1rem 3rem;
+	padding: 1rem 1rem 3rem;
 	div {
 		grid-column-end: span 2;
-        padding: 1rem;
+		padding: 1rem;
 		border-bottom: 2px solid ${({ theme }) => theme.colors.lightgrey};
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-        margin-bottom: .5rem;
+		margin-bottom: 0.5rem;
 	}
 	.phone {
 		color: ${({ theme }) => theme.colors.green};
 	}
-    h3 {
-        margin-top: 1rem;
-    }
+	h3 {
+		margin-top: 1rem;
+	}
 `;
 
 const Label = styled.p`
@@ -32,12 +32,10 @@ const Label = styled.p`
 
 const Info = styled.p`
 	text-align: left;
-    color: ${({ theme }) => theme.colors.grey};
+	color: ${({ theme }) => theme.colors.grey};
 `;
 
-function ContactDetails({ contact , hasPicture, initials}) {
-
-
+function ContactDetails({ contact, hasPicture, initials }) {
 	return (
 		<Box>
 			<div>

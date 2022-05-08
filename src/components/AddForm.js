@@ -38,7 +38,7 @@ const Form = styled.form`
 	}
 `;
 
-function AddForm( {closeModal}) {
+function AddForm({ closeModal }) {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [emailLabel, setEmailLabel] = useState('work');
@@ -59,19 +59,19 @@ function AddForm( {closeModal}) {
 			//const name = `${firstName} ${lastName}`;
 
 			// Create a organization and add location
-			let orgId = ""
+			let orgId = '';
 
-			if(organization) {
-			const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
-				name: organization,
-			});
+			if (organization) {
+				const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
+					name: organization,
+				});
 
-			orgId = newOrganization.data.data.id;
+				orgId = newOrganization.data.data.id;
 
-			await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
-				address: location,
-			});
-		}
+				await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
+					address: location,
+				});
+			}
 			// Create a person
 			const newPerson = {
 				name: name,
@@ -107,9 +107,8 @@ function AddForm( {closeModal}) {
 			setGroups('');
 			setLocation('');
 
-
-			setIsUpdated(false)
-			closeModal()
+			setIsUpdated(false);
+			closeModal();
 
 			//Close Dialog
 		} catch (error) {
@@ -122,7 +121,7 @@ function AddForm( {closeModal}) {
 		<>
 			<Form id="add-person-form" onSubmit={handleSubmit}>
 				<label htmlFor="name">Name:</label>
-				<input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />					
+				<input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
 
 				<label htmlFor="organization">Organization:</label>
 				<input type="text" name="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} />
