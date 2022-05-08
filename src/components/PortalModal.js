@@ -53,7 +53,7 @@ const Button = styled.button`
 	border: ${(props) => props.border || '1px solid grey'};
 `;
 
-const PortalModal = ({ children, title, isOpen, closeModal }) => {
+const PortalModal = ({ children, title, isOpen, closeModal, setToggleEdit }) => {
 
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(

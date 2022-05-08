@@ -14,13 +14,17 @@ const SubmitFormButton = styled.button`
 	color: #fff;
 `
 
-function EditButton({person}) {
+function EditButton({person, setPreviousOpen}) {
 	const [isOpen, setIsOpen] = useState(false);
 
+	const handleClick = () => {
+		setPreviousOpen(false);
+		setIsOpen(true)
+	}
 
 	return (
 		<>
-			<Button onClick={() => setIsOpen(true)}>Edit</Button>
+			<Button onClick={handleClick}>Edit</Button>
 			<PortalModal title="Edit Contact" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
 				<EditForm person={person} closeModal={() => setIsOpen(false)}/>
 				<SubmitFormButton form="add-person-form" type="submit">Save</SubmitFormButton>

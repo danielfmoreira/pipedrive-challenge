@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import MainContainer from './components/MainContainer';
 import logo from './assets/pipedrive-logo.png';
-
+import ContactList from './components/ContactList';
+import AddButton from './components/AddButton';
+import SortBySelect from './components/SortBySelect';
 
 const Navbar = styled.nav`
 	padding: 1rem;
@@ -13,6 +14,16 @@ const Navbar = styled.nav`
 		height: 2rem;
 	}
 `;
+const MainWrapper = styled.main`
+	margin: 0 auto;
+	padding: 3rem;
+	max-width: 1000px;
+`;
+
+const H1 = styled.h1`
+	border-bottom: 1px solid lightgrey;
+	padding: 20px 0;
+`;
 
 const App = () => {
 	return (
@@ -20,7 +31,12 @@ const App = () => {
 			<Navbar>
 				<img src={logo} alt="Pipedrive logo" />
 			</Navbar>
-			<MainContainer />
+			<MainWrapper>
+				<H1>People's List</H1>
+				<AddButton />
+				<SortBySelect />
+				<ContactList />
+			</MainWrapper>
 		</>
 	);
 };

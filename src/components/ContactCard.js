@@ -6,8 +6,7 @@ import { IoBusinessOutline } from 'react-icons/io5';
 import Avatar from './Avatar';
 import ContactDetails from './ContactDetails';
 import DeleteButton from './DeleteButton';
-import EditButton from './EditButton'
-
+import EditForm from './EditForm';
 
 const Card = styled.li`
 	border: 1px solid lightgrey;
@@ -29,8 +28,19 @@ const CardInfo = styled.div`
 	}
 `;
 
+const Button = styled.button`
+	${'' /* background-color: ${({ theme }) => theme.colors.green}; */}
+	padding: 0.5rem 1rem;
+	color: #fff;
+`;
+
+const SubmitFormButton = styled.button`
+	color: #fff;
+`;
+
 function ContactCard({ contact, index, getItemStyle }) {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(false);
+	const [hideEdit, setHideEdit] = useState(true);
 	const hasPicture = contact.picture_id ? true : false;
 
 	let initials;
@@ -39,6 +49,11 @@ function ContactCard({ contact, index, getItemStyle }) {
 	} else {
 		initials = (contact.first_name[0] + contact.first_name[1]).toUpperCase();
 	}
+
+	const closeModal = () => {
+		setHideEdit(true);
+		setIsOpen(false);
+	};
 
 	return (
 		<>
@@ -59,13 +74,30 @@ function ContactCard({ contact, index, getItemStyle }) {
 					</Card>
 				)}
 			</Draggable>
-			<PortalModal title="Personal Information" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
-				<ContactDetails initials={initials} hasPicture={hasPicture} contact={contact} />
-				<div>
-				<DeleteButton personId={contact.id} closeModal={() => setIsOpen(false)}/>
-				<EditButton person={contact} closeModal={() => setIsOpen(false)}/>
-				</div>
-			</PortalModal>
+
+			{hideEdit ? (
+				<PortalModal title="Personal Information" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
+					<ContactDetails initials={initials} hasPicture={hasPicture} contact={contact} />
+					<div>
+						<DeleteButton personId={contact.id} closeModal={() => setIsOpen(false)} />
+						<Button
+							onClick={() => {
+								setHideEdit(false);
+							}}
+							closeModal={() => setIsOpen(false)}
+						>
+							Edit
+						</Button>
+					</div>
+				</PortalModal>
+			) : (
+				<PortalModal title="Edit Contact" setHideEdit={setHideEdit} isOpen={isOpen} closeModal={closeModal}>
+					<EditForm person={contact} closeModal={() => setIsOpen(false)} />
+					<SubmitFormButton form="add-person-form" type="submit">
+						Save
+					</SubmitFormButton>
+				</PortalModal>
+			)}
 		</>
 	);
 }
