@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import AddForm from './AddForm';
 import PortalModal from './PortalModal';
+
 
 const Button = styled.button`
 	${'' /* background-color: ${({ theme }) => theme.colors.green}; */}
@@ -15,6 +16,7 @@ const SubmitFormButton = styled.button`
 
 function AddButton() {
 	const [isOpen, setIsOpen] = useState(false);
+
 
 	return (
 		<>

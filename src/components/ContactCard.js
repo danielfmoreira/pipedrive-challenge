@@ -34,9 +34,9 @@ function ContactCard({ contact, index, getItemStyle }) {
 
 	let initials;
 	if (contact.last_name) {
-		initials = contact.first_name[0] + contact.last_name[0];
+		initials = (contact.first_name[0] + contact.last_name[0]).toUpperCase();
 	} else {
-		initials = contact.first_name[0] + contact.first_name[1];
+		initials = (contact.first_name[0] + contact.first_name[1]).toUpperCase();
 	}
 
 	return (

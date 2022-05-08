@@ -54,7 +54,7 @@ function ContactDetails({ contact , hasPicture, initials}) {
 			<Label>Groups:</Label>
 			<Info>{contact.e17b7fccc25fc6a50263ba9421b9d0089b78ab86}</Info>
 			<Label>Location:</Label>
-			<Info>{contact.org_id.address}</Info>
+			<Info>{contact.org_id?.address}</Info>
 		</Box>
 	);
 }

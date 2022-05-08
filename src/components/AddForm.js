@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
+import { ContactListContext } from '../context/ContactList.context';
 
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
@@ -50,6 +51,8 @@ function AddForm() {
 	const [organization, setOrganization] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
+	const { setIsUpdated } = useContext(ContactListContext);
+
 	const handleSubmit = async (e) => {
 		try {
 			e.preventDefault();
@@ -57,16 +60,19 @@ function AddForm() {
 			const name = `${firstName} ${lastName}`;
 
 			// Create a organization and add location
+			let orgId = ""
+
+			if(organization) {
 			const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
 				name: organization,
 			});
 
-			const orgId = newOrganization.data.data.id;
+			orgId = newOrganization.data.data.id;
 
 			await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
 				address: location,
 			});
-
+		}
 			// Create a person
 			const newPerson = {
 				name: name,
@@ -102,6 +108,9 @@ function AddForm() {
 			setAssistant('');
 			setGroups('');
 			setLocation('');
+
+
+			setIsUpdated(false)
 
 			//Close Dialog
 		} catch (error) {

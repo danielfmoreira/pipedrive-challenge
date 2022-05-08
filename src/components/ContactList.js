@@ -1,7 +1,9 @@
-import React from 'react'
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useContext } from 'react'
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import ContactCard from './ContactCard';
 import styled from 'styled-components';
+import { ContactListContext } from '../context/ContactList.context';
+
 
 const reorder = (list, startIndex, endIndex) => {
 	const result = Array.from(list);
@@ -15,7 +17,9 @@ const ListContainer = styled.ul`
 	list-style: none;
 `;
 
-function ContactList({contacts, setContacts}) {
+function ContactList() {
+  const { contacts } = useContext(ContactListContext)
+	const { setContacts } = useContext(ContactListContext)
 
     const getItemStyle = (isDragging, draggableStyle) => ({
         userSelect: "none",

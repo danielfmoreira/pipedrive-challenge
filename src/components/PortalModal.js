@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
@@ -54,7 +53,8 @@ const Button = styled.button`
 	border: ${(props) => props.border || '1px solid grey'};
 `;
 
-const PortalModal = ({ children, isOpen, onClose, title }) => {
+const PortalModal = ({ children, title, isOpen, onClose }) => {
+
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
 		<BackgroundOverlay>
