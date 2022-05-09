@@ -87,7 +87,7 @@ function ContactCard({ contact, index, getItemStyle }) {
 			) : (
 				<PortalModal title="Edit Contact" setHideEdit={setHideEdit} isOpen={isOpen} closeModal={closeModal}>
 					<EditForm person={contact} closeModal={() => setIsOpen(false)} />
-					<Button form="add-person-form" type="submit">
+					<Button form="edit-person-form" type="submit">
 						Save
 					</Button>
 				</PortalModal>

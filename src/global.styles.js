@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   h2 {
 	  font-size: 1.2rem;
   }
-  p, label, button {
+  p, input, label, button, select {
     font-size: 0.9rem;
   }
   form {
@@ -24,7 +24,6 @@ const GlobalStyle = createGlobalStyle`
   }
   label {
 	  text-align: left;
-	  font-size: 0.9rem;
 	  font-weight: 600;
 	  margin: 10px 0 5px;
 	  color: ${({ theme }) => theme.colors.grey};

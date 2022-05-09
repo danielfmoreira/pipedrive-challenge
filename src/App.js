@@ -4,6 +4,8 @@ import ContactList from './components/ContactList';
 import AddButton from './components/AddButton';
 import SearchBar from './components/SearchBar';
 import FlexRow from './components/Styled/FlexRow.styled';
+import { ContactListContext } from './context/contacts.context';
+import { useContext } from 'react';
 
 const Navbar = styled.nav`
 	padding: 1rem;
@@ -27,8 +29,12 @@ const H1 = styled.h1`
 `;
 
 const App = () => {
+
+	const { isLoading } = useContext(ContactListContext)
+
 	return (
 		<>
+		
 			<Navbar>
 				<img src={logo} alt="Pipedrive logo" />
 			</Navbar>
@@ -38,7 +44,7 @@ const App = () => {
 					<AddButton />
 					<SearchBar />
 				</FlexRow>
-				<ContactList />
+				{!isLoading ? <ContactList /> : <p>Loading...</p>}
 			</MainWrapper>
 		</>
 	);

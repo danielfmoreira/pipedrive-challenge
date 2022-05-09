@@ -16,6 +16,10 @@ function SearchBar() {
 		const searchResult = allContacts.filter((person) => {
 			return person.name.toLowerCase().includes(searchString.toLowerCase());
 		});
+
+		if(searchResult <= 0) {
+			setContacts([]);	
+		}
 		setContacts(searchResult);
 	};
 
