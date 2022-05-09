@@ -1,42 +1,10 @@
-import styled from 'styled-components';
 import { useState, useContext } from 'react';
 import axios from 'axios';
 import { ContactListContext } from '../context/contacts.context';
+import FlexRow from './Styled/FlexRow.styled';
 
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
-
-const Row = styled.div`
-	display: flex;
-	flex-flow: row wrap;
-	gap: 0.5rem;
-	justify-content: space-between;
-	input,
-	select {
-		width: 48%;
-	}
-`;
-
-const Form = styled.form`
-	width: 100%;
-	display: flex;
-	flex-flow: column wrap;
-	padding: 1rem 0;
-	input,
-	select {
-		height: 2.5rem;
-		padding: 0.5rem;
-		color: #000;
-		border: 1px solid ${({ theme }) => theme.colors.grey};
-	}
-	label {
-		text-align: left;
-		font-size: 0.9rem;
-		font-weight: 600;
-		margin: 10px 0 5px;
-		color: ${({ theme }) => theme.colors.grey};
-	}
-`;
 
 function AddForm({ closeModal }) {
 	const [name, setName] = useState('');
@@ -94,7 +62,8 @@ function AddForm({ closeModal }) {
 				e17b7fccc25fc6a50263ba9421b9d0089b78ab86: groups,
 			};
 
-			await axios.post(`${API_URL}/persons?api_token=${KEY}`, newPerson);
+			const createdPerson = await axios.post(`${API_URL}/persons?api_token=${KEY}`, newPerson);
+			console.log({ createdPerson });
 
 			//Clear the form
 			setName('');
@@ -119,7 +88,7 @@ function AddForm({ closeModal }) {
 
 	return (
 		<>
-			<Form id="add-person-form" onSubmit={handleSubmit}>
+			<form id="add-person-form" onSubmit={handleSubmit}>
 				<label htmlFor="name">Name:</label>
 				<input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
 
@@ -127,7 +96,7 @@ function AddForm({ closeModal }) {
 				<input type="text" name="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} />
 
 				<label htmlFor="phone">Phone:</label>
-				<Row>
+				<FlexRow justify="space-between" gap="1rem">
 					<input type="tel" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
 					<select name="phoneLabel" defaultValue={phoneLabel} onChange={(e) => setPhoneLabel(e.target.value)}>
 						<option value="work">Work</option>
@@ -135,9 +104,9 @@ function AddForm({ closeModal }) {
 						<option value="mobile">Mobile</option>
 						<option value="other">Other</option>
 					</select>
-				</Row>
+				</FlexRow>
 				<label htmlFor="email">Email:</label>
-				<Row>
+				<FlexRow justify="space-between" gap="1rem">
 					<input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 					<select name="emailLabel" defaultValue={emailLabel} onChange={(e) => setEmailLabel(e.target.value)}>
 						<option value="work">Work</option>
@@ -145,7 +114,7 @@ function AddForm({ closeModal }) {
 						<option value="mobile">Mobile</option>
 						<option value="other">Other</option>
 					</select>
-				</Row>
+				</FlexRow>
 				<label htmlFor="assistant">Assistant:</label>
 				<input type="text" name="assistant" value={assistant} onChange={(e) => setAssistant(e.target.value)} />
 
@@ -155,7 +124,7 @@ function AddForm({ closeModal }) {
 				<label htmlFor="location">Location:</label>
 				<input type="text" name="location" value={location} onChange={(e) => setLocation(e.target.value)} />
 				{errorMessage && <p>{errorMessage}</p>}
-			</Form>
+			</form>
 		</>
 	);
 }

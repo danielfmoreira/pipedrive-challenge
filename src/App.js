@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import logo from './assets/pipedrive-logo.png';
 import ContactList from './components/ContactList';
 import AddButton from './components/AddButton';
-import SortBySelect from './components/SortBySelect';
 import SearchBar from './components/SearchBar';
+import FlexRow from './components/Styled/FlexRow.styled';
 
 const Navbar = styled.nav`
 	padding: 1rem;
@@ -34,9 +34,10 @@ const App = () => {
 			</Navbar>
 			<MainWrapper>
 				<H1>People's List</H1>
-				<AddButton />
-				<SortBySelect />
-				<SearchBar />
+				<FlexRow height="80px" justify="space-between" align="flex-end" p="0 0 1rem 0">
+					<AddButton />
+					<SearchBar />
+				</FlexRow>
 				<ContactList />
 			</MainWrapper>
 		</>

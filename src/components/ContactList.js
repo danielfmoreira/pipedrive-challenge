@@ -4,7 +4,6 @@ import ContactCard from './ContactCard';
 import styled from 'styled-components';
 import { ContactListContext } from '../context/contacts.context';
 
-
 const reorder = (list, startIndex, endIndex) => {
 	const result = Array.from(list);
 	const [removed] = result.splice(startIndex, 1);
@@ -13,26 +12,23 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const ListContainer = styled.ul`
-	padding: 0 5px;
 	list-style: none;
+	padding: 0;
 `;
 
 function ContactList() {
-	const { contacts, setContacts, allContacts } = useContext(ContactListContext);
+	const { contacts, setContacts } = useContext(ContactListContext);
 
 	const hasContacts = contacts.length > 0 ? true : false;
 
 	const getItemStyle = (isDragging, draggableStyle) => ({
 		userSelect: 'none',
-		padding: '1rem',
-		margin: '1rem',
 		background: isDragging ? 'rgb(220,220,220)' : 'white',
 		...draggableStyle,
 	});
 
 	const getListStyle = (isDraggingOver) => ({
 		background: isDraggingOver ? 'white' : 'white',
-		padding: '16px',
 	});
 
 	const onDragEnd = (result) => {
@@ -46,7 +42,7 @@ function ContactList() {
 
 	return (
 		<>
-			{ hasContacts ? (
+			{hasContacts ? (
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId="droppable">
 						{(provided, snapshot) => (
@@ -58,10 +54,10 @@ function ContactList() {
 							</ListContainer>
 						)}
 					</Droppable>
-				</DragDropContext>) :
-        (<>No Contact</>)
-
-			}
+				</DragDropContext>
+			) : (
+				<>No Contact</>
+			)}
 		</>
 	);
 }

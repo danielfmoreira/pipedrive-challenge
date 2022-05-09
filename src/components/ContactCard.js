@@ -7,15 +7,16 @@ import Avatar from './Avatar';
 import ContactDetails from './ContactDetails';
 import DeleteButton from './DeleteButton';
 import EditForm from './EditForm';
+import Button from './Styled/Button.styled';
 
 const Card = styled.li`
 	border: 1px solid lightgrey;
 	border-radius: 5px;
-	padding: 10px 20px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 1rem 0;
+	padding: 1rem;
+	margin-bottom: 1rem;
 `;
 
 const CardInfo = styled.div`
@@ -28,25 +29,15 @@ const CardInfo = styled.div`
 	}
 `;
 
-const Button = styled.button`
-	${'' /* background-color: ${({ theme }) => theme.colors.green}; */}
-	padding: 0.5rem 1rem;
-	color: #fff;
-`;
-
-const SubmitFormButton = styled.button`
-	color: #fff;
-`;
-
 function ContactCard({ contact, index, getItemStyle }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [hideEdit, setHideEdit] = useState(true);
 	const hasPicture = contact.picture_id ? true : false;
 
 	let initials;
-	if (contact.last_name) {
+	if (contact.last_name && contact.first_name) {
 		initials = (contact.first_name[0] + contact.last_name[0]).toUpperCase();
-	} else {
+	} else if (contact.first_name) {
 		initials = (contact.first_name[0] + contact.first_name[1]).toUpperCase();
 	}
 
@@ -76,11 +67,14 @@ function ContactCard({ contact, index, getItemStyle }) {
 			</Draggable>
 
 			{hideEdit ? (
-				<PortalModal title="Personal Information" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
+				<PortalModal title="Personal Information" footerFlow="row-reverse" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
 					<ContactDetails initials={initials} hasPicture={hasPicture} contact={contact} />
 					<div>
 						<DeleteButton personId={contact.id} closeModal={() => setIsOpen(false)} />
 						<Button
+							color="grey"
+							bgColor="white"
+							ml=".5rem"
 							onClick={() => {
 								setHideEdit(false);
 							}}
@@ -93,9 +87,9 @@ function ContactCard({ contact, index, getItemStyle }) {
 			) : (
 				<PortalModal title="Edit Contact" setHideEdit={setHideEdit} isOpen={isOpen} closeModal={closeModal}>
 					<EditForm person={contact} closeModal={() => setIsOpen(false)} />
-					<SubmitFormButton form="add-person-form" type="submit">
+					<Button form="add-person-form" type="submit">
 						Save
-					</SubmitFormButton>
+					</Button>
 				</PortalModal>
 			)}
 		</>

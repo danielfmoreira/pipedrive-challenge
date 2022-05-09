@@ -2,6 +2,10 @@ import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { ContactListContext } from '../context/contacts.context';
 
+const StyledSearchBar = styled.input`
+	max-width: 360px;
+`
+
 function SearchBar() {
 	const [searchString, setSearchString] = useState('');
 	const { setContacts, allContacts } = useContext(ContactListContext);
@@ -15,7 +19,7 @@ function SearchBar() {
 		setContacts(searchResult);
 	};
 
-	return <input value={searchString} placeholder="Search by name" type="text" onChange={handleSearch} />;
+	return <StyledSearchBar value={searchString} placeholder="Search by name" type="text" onChange={handleSearch} />;
 }
 
 export default SearchBar;

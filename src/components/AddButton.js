@@ -1,17 +1,7 @@
-import { useState, useContext } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import AddForm from './AddForm';
 import PortalModal from './PortalModal';
-
-const Button = styled.button`
-	${'' /* background-color: ${({ theme }) => theme.colors.green}; */}
-	padding: 0.5rem 1rem;
-	color: #fff;
-`;
-
-const SubmitFormButton = styled.button`
-	color: #fff;
-`;
+import Button from './Styled/Button.styled';
 
 function AddButton() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -21,9 +11,7 @@ function AddButton() {
 			<Button onClick={() => setIsOpen(true)}>+ Person</Button>
 			<PortalModal title="Add Contact" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
 				<AddForm closeModal={() => setIsOpen(false)} />
-				<SubmitFormButton form="add-person-form" type="submit">
-					Save
-				</SubmitFormButton>
+				<Button form="add-person-form" type="submit">Save</Button>
 			</PortalModal>
 		</>
 	);
