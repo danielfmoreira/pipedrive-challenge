@@ -10,7 +10,7 @@ function ContactListWrapper({ children }) {
 	const [contacts, setContacts] = useState([]);
 	const [allContacts, setAllContacts] = useState([]);
 	const [isUpdated, setIsUpdated] = useState(true);
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		getContacts();
@@ -18,22 +18,21 @@ function ContactListWrapper({ children }) {
 
 	const getContacts = async () => {
 		try {
-			setIsLoading(true)
+			setIsLoading(true);
 			const response = await axios.get(`${API_URL}/persons?limit=200&api_token=${KEY}`);
 			const contactList = response.data.data.reverse();
 			setContacts(contactList);
 			setAllContacts(contactList);
 			setIsUpdated(true);
-			setIsLoading(false)
+			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
 		}
 	};
-
-	console.log({ contacts });
-
 	return (
-		<ContactListContext.Provider value={{ isUpdated, isLoading, setIsUpdated, contacts, setContacts, allContacts, setAllContacts }}>{children}</ContactListContext.Provider>
+		<ContactListContext.Provider value={{ isUpdated, isLoading, setIsUpdated, contacts, setContacts, allContacts, setAllContacts }}>
+			{children}
+		</ContactListContext.Provider>
 	);
 }
 

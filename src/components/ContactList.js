@@ -17,10 +17,8 @@ const ListContainer = styled.ul`
 `;
 
 function ContactList() {
-	const { contacts, setContacts, isLoading } = useContext(ContactListContext);
+	const { contacts, setContacts } = useContext(ContactListContext);
 	const hasContacts = contacts.length > 0 ? true : false;
-
-	console.log(isLoading)
 
 	const getItemStyle = (isDragging, draggableStyle) => ({
 		userSelect: 'none',
