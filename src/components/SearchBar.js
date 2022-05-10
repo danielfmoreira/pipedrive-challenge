@@ -4,7 +4,7 @@ import { ContactListContext } from '../context/contacts.context';
 
 const StyledSearchBar = styled.input`
 	max-width: 360px;
-`
+`;
 
 function SearchBar() {
 	const [searchString, setSearchString] = useState('');
@@ -17,8 +17,8 @@ function SearchBar() {
 			return person.name.toLowerCase().includes(searchString.toLowerCase());
 		});
 
-		if(searchResult <= 0) {
-			setContacts([]);	
+		if (searchResult <= 0) {
+			setContacts([]);
 		}
 		setContacts(searchResult);
 	};

@@ -78,8 +78,6 @@ function AddForm({ closeModal }) {
 
 			setIsUpdated(false);
 			closeModal();
-
-			//Close Dialog
 		} catch (error) {
 			console.log(error);
 			setErrorMessage('Something went wrong. Try again');

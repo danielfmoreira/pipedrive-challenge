@@ -11,7 +11,9 @@ function AddButton() {
 			<Button onClick={() => setIsOpen(true)}>+ Person</Button>
 			<PortalModal title="Add Person" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
 				<AddForm closeModal={() => setIsOpen(false)} />
-				<Button form="add-person-form" type="submit">Save</Button>
+				<Button form="add-person-form" type="submit">
+					Save
+				</Button>
 			</PortalModal>
 		</>
 	);
