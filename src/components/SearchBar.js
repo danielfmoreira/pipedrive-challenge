@@ -13,17 +13,20 @@ function SearchBar() {
 	const handleSearch = (event) => {
 		setSearchString(event.target.value);
 
+		if(searchString.length <= 0) {
+			setContacts(allContacts)
+		}
+
+		console.log(searchString)
+
 		const searchResult = allContacts.filter((person) => {
 			return person.name.toLowerCase().includes(searchString.toLowerCase());
 		});
-
-		if (searchResult <= 0) {
-			setContacts([]);
-		}
+		
 		setContacts(searchResult);
 	};
 
-	return <StyledSearchBar value={searchString} placeholder="Search by name" type="text" onChange={handleSearch} />;
+	return <StyledSearchBar value={searchString} placeholder="Search by name" type="text" onInput={handleSearch} onChange={handleSearch} />;
 }
 
 export default SearchBar;
