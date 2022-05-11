@@ -1,78 +1,83 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import { ContactListContext } from '../context/contacts.context';
 import FlexRow from './Styled/FlexRow.styled';
+import { Formik, FieldArray, getIn, Field } from 'formik';
+import * as Yup from 'yup';
+import { IoTrashBin } from 'react-icons/io5';
 
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
 
 function EditForm({ person, closeModal }) {
-	const [name, setName] = useState(person.name);
-	const [email, setEmail] = useState(person.email[0].value);
-	const [emailLabel, setEmailLabel] = useState(person.email[0].label);
-	const [phone, setPhone] = useState(person.phone[0].value);
-	const [phoneLabel, setPhoneLabel] = useState(person.phone[0].label);
-	const [groups, setGroups] = useState(person.e17b7fccc25fc6a50263ba9421b9d0089b78ab86);
-	const [location, setLocation] = useState(person.org_id ? person.org_id.address : '');
-	const [assistant, setAssistant] = useState(person.ead969773b1c36b82991c53b93516ee07556666e);
-	const [organization, setOrganization] = useState(person.org_name);
-	const [errorMessage, setErrorMessage] = useState('');
-
 	const { setIsUpdated } = useContext(ContactListContext);
 
-	const handleSubmit = async (e) => {
+	const initialValues = {
+		name: person.name,
+		email: person.email,
+		phone: person.phone,
+		organization: person.org_name,
+		assistant: person.ead969773b1c36b82991c53b93516ee07556666e,
+		groups: person.e17b7fccc25fc6a50263ba9421b9d0089b78ab86,
+		location: person.org_id ? person.org_id.address : '',
+	};
+
+	const optionsPhone = ['Work', 'Home', 'Mobile', 'Other'];
+	const optionsEmail = ['Work', 'Home', 'Other'];
+	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+	//Form Validation Schema
+	const personSchema = Yup.object({
+		name: Yup.string().required('Name is required'),
+		email: Yup.array().of(
+			Yup.object().shape({
+				value: Yup.string().email('Invalid email'),
+			})
+		),
+		phone: Yup.array().of(
+			Yup.object().shape({
+				value: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+			})
+		),
+	});
+
+	const handleSubmit = async (values, isValid) => {
 		try {
-			e.preventDefault();
-
-			console.log('editing');
-
 			const personId = person.id;
 			let orgId = person.org_id ? person.org_id.value : '';
 
 			//If organization exists and needs update
 			if (person.org_id) {
-				if (organization !== person.org_id.name || location !== person.org_id.address) {
+				if (values.organization !== person.org_id.name || values.location !== person.org_id.address) {
 					await axios.put(`${API_URL}/organizations/${person.org_id.value}?api_token=${KEY}`, {
-						name: organization,
-						address: location,
+						name: values.organization,
+						address: values.location,
 					});
 				}
 			}
 
 			//If organization does not exist, create one and add location
-			if (!person.org_id && organization) {
+			if (!person.org_id && values.organization) {
 				const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
-					name: organization,
+					name: values.organization,
 				});
 
 				orgId = newOrganization.data.data.id;
 
 				await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
-					name: name,
-					address: location,
+					name: values.name,
+					address: values.organization,
 				});
 			}
 
 			// Create a person
 			const updatedPerson = {
-				name: name,
-				email: [
-					{
-						value: email,
-						primary: true,
-						label: emailLabel,
-					},
-				],
-				phone: [
-					{
-						value: phone,
-						primary: true,
-						label: phoneLabel,
-					},
-				],
+				name: values.organization,
+				email: values.email,
+				phone: values.phone,
 				org_id: orgId,
-				ead969773b1c36b82991c53b93516ee07556666e: assistant,
-				e17b7fccc25fc6a50263ba9421b9d0089b78ab86: groups,
+				ead969773b1c36b82991c53b93516ee07556666e: values.assistant,
+				e17b7fccc25fc6a50263ba9421b9d0089b78ab86: values.groups,
 			};
 
 			await axios.put(`${API_URL}/persons/${personId}?api_token=${KEY}`, updatedPerson);
@@ -81,50 +86,109 @@ function EditForm({ person, closeModal }) {
 			closeModal();
 		} catch (error) {
 			console.log(error);
-			setErrorMessage('Something went wrong. Try again');
 		}
 	};
 
 	return (
-		<>
-			<form id="edit-person-form" onSubmit={handleSubmit}>
-				<label htmlFor="name">Name:</label>
-				<input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
+		<Formik initialValues={initialValues} validationSchema={personSchema} onSubmit={handleSubmit}>
+			{(formik) => {
+				const { values, handleChange, handleSubmit, errors, touched, handleBlur, isValid } = formik;
 
-				<label htmlFor="organization">Organization:</label>
-				<input type="text" name="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} />
+				const hasMultiplePhones = values.phone.length > 1 ? true : false;
+				const hasMultipleEmails = values.email.length > 1 ? true : false;
 
-				<label htmlFor="phone">Phone:</label>
-				<FlexRow justify="space-between" gap="1rem">
-					<input type="tel" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-					<select name="phoneLabel" defaultValue={phoneLabel} onChange={(e) => setPhoneLabel(e.target.value)}>
-						<option value="work">Work</option>
-						<option value="home">Home</option>
-						<option value="mobile">Mobile</option>
-						<option value="other">Other</option>
-					</select>
-				</FlexRow>
-				<label htmlFor="email">Email:</label>
-				<FlexRow justify="space-between" gap="1rem">
-					<input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-					<select name="emailLabel" defaultValue={emailLabel} onChange={(e) => setEmailLabel(e.target.value)}>
-						<option value="work">Work</option>
-						<option value="home">Home</option>
-						<option value="mobile">Mobile</option>
-						<option value="other">Other</option>
-					</select>
-				</FlexRow>
-				<label htmlFor="assistant">Assistant:</label>
-				<input type="text" name="assistant" value={assistant} onChange={(e) => setAssistant(e.target.value)} />
+				return (
+					<form id="edit-person-form" onSubmit={handleSubmit} noValidate>
+						{console.log(JSON.stringify(values, null, 2))}
+						<label htmlFor="name">Name</label>
+						<input
+							name="name"
+							id="name"
+							value={values.name}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							className={errors.name && touched.name ? 'input-error' : ''}
+						/>
+						<div className="form-error">{errors.name && touched.name && <span>{errors.name}</span>}</div>
+						<label htmlFor="organization">Organization</label>
+						<input name="organization" id="organization" value={values.organization} onChange={handleChange} onBlur={handleBlur} />
 
-				<label htmlFor="groups">Groups:</label>
-				<input type="text" name="groups" value={groups} onChange={(e) => setGroups(e.target.value)} />
+						<label htmlFor="phone">Phone</label>
 
-				<label htmlFor="location">Location:</label>
-				<input type="text" name="location" value={location} onChange={(e) => setLocation(e.target.value)} />
-				{errorMessage && <p>{errorMessage}</p>}
-			</form>
-		</>
+						<FieldArray name="phone">
+							{({ push, remove }) => (
+								<>
+									{values.phone.map((item, i) => {
+										const name = `phone[${i}].value`;
+										const errorMsg = getIn(errors, name);
+										return (
+											<div key={item + i}>
+												<FlexRow justify="space-between" gap="0.8rem">
+													<input name={name} value={values.phone.value} onChange={handleChange} onBlur={handleBlur} />
+													<select name={`phone[${i}].label`} value={item.label} onChange={handleChange} onBlur={handleBlur}>
+														{optionsPhone.map((label) => (
+															<option key={label} value={label.toLowerCase()}>
+																{label}
+															</option>
+														))}
+													</select>
+													{hasMultiplePhones && <IoTrashBin size="20" color="grey" type="button" onClick={() => (hasMultiplePhones ? remove(i) : '')} />}
+												</FlexRow>
+												<div className="form-error-array">{errorMsg ? <span>{errorMsg}</span> : ''}</div>
+											</div>
+										);
+									})}
+									<span className="add-array" type="button" onClick={() => push({ value: '', label: '' })}>
+										+Add phone
+									</span>
+								</>
+							)}
+						</FieldArray>
+
+						<label htmlFor="email">Email</label>
+
+						<FieldArray name="email">
+							{({ push, remove }) => (
+								<>
+									{values.email.map((item, i) => {
+										const name = `email[${i}].value`;
+										const errorMsg = getIn(errors, name);
+										return (
+											<div key={item + i}>
+												<FlexRow justify="space-between" gap="0.8rem">
+													<input name={name} value={values.email.value} onChange={handleChange} onBlur={handleBlur} />
+													<select name={`email[${i}].label`} value={item.label} onChange={handleChange} onBlur={handleBlur}>
+														{optionsEmail.map((label) => (
+															<option key={label} value={label.toLowerCase()}>
+																{label}
+															</option>
+														))}
+													</select>
+													{hasMultipleEmails && <IoTrashBin size="20" color="grey" type="button" onClick={() => (hasMultipleEmails ? remove(i) : '')} />}
+												</FlexRow>
+												<div className="form-error-array">{errorMsg ? <span>{errorMsg}</span> : ''}</div>
+											</div>
+										);
+									})}
+									<span className="add-array" type="button" onClick={() => push({ value: '', label: '' })}>
+										+Add email
+									</span>
+								</>
+							)}
+						</FieldArray>
+
+						<label htmlFor="assistant">Assistant</label>
+						<input name="assistant" id="assistant" value={values.assistant} onChange={handleChange} onBlur={handleBlur} />
+
+						<label htmlFor="groups">Groups</label>
+						<input name="groups" id="groups" value={values.groups} onChange={handleChange} onBlur={handleBlur} />
+
+						<label htmlFor="location">Location</label>
+						<input name="location" id="location" value={values.location} onChange={handleChange} onBlur={handleBlur} />
+					</form>
+				);
+			}}
+		</Formik>
 	);
 }
 
