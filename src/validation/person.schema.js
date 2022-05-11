@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 //Form Validation Schema
 
-const phoneRegExp = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+const phoneRegExp = /([0-9\s-]{7,})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
 
 export const personSchema = Yup.object({
 	name: Yup.string().required('Name is required'),
