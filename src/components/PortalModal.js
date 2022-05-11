@@ -17,7 +17,7 @@ const ModalBox = styled.section`
 	border: 1px solid ${({ theme }) => theme.colors.lightgrey};
 	border-radius: 4px;
 	background-color: #fff;
-	width: 480px;
+	max-width: min(480px 95vw);
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: space-between;
