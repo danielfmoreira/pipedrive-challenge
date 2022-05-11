@@ -6,6 +6,8 @@ import SearchBar from './components/SearchBar';
 import FlexRow from './components/Styled/FlexRow.styled';
 import { ContactListContext } from './context/contacts.context';
 import { useContext } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const Navbar = styled.nav`
 	padding: 1rem;
@@ -29,12 +31,10 @@ const H1 = styled.h1`
 `;
 
 const App = () => {
-
-	const { isLoading } = useContext(ContactListContext)
+	const { isLoading } = useContext(ContactListContext);
 
 	return (
 		<>
-		
 			<Navbar>
 				<img src={logo} alt="Pipedrive logo" />
 			</Navbar>
@@ -46,6 +46,7 @@ const App = () => {
 				</FlexRow>
 				{!isLoading ? <ContactList /> : <p>Loading...</p>}
 			</MainWrapper>
+			<ToastContainer style={{ marginTop: '100px' }} autoClose={1000} />
 		</>
 	);
 };

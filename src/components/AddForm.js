@@ -3,8 +3,9 @@ import axios from 'axios';
 import { ContactListContext } from '../context/contacts.context';
 import FlexRow from './Styled/FlexRow.styled';
 import { Formik, FieldArray, getIn } from 'formik';
-import * as Yup from 'yup';
 import { IoTrashBin } from 'react-icons/io5';
+import { toast } from 'react-toastify';
+import { personSchema } from '../validation/person.schema';
 
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
@@ -34,22 +35,6 @@ function AddForm({ closeModal }) {
 
 	const optionsPhone = ['Work', 'Home', 'Mobile', 'Other'];
 	const optionsEmail = ['Work', 'Home', 'Other'];
-	const phoneRegExp = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
-
-	//Form Validation Schema
-	const personSchema = Yup.object({
-		name: Yup.string().required('Name is required'),
-		email: Yup.array().of(
-			Yup.object().shape({
-				value: Yup.string().email('Invalid email'),
-			})
-		),
-		phone: Yup.array().of(
-			Yup.object().shape({
-				value: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
-			})
-		),
-	});
 
 	const handleSubmit = async (values, isValid) => {
 		try {
@@ -81,11 +66,12 @@ function AddForm({ closeModal }) {
 
 			const createdPerson = await axios.post(`${API_URL}/persons?api_token=${KEY}`, newPerson);
 			console.log({ createdPerson });
+			toast.success('Person created successfully!');
 
 			setIsUpdated(false);
 			closeModal();
 		} catch (error) {
-			console.log(error);
+			toast.error('Error while creating a person!');
 		}
 	};
 

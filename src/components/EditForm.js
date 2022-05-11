@@ -3,8 +3,9 @@ import axios from 'axios';
 import { ContactListContext } from '../context/contacts.context';
 import FlexRow from './Styled/FlexRow.styled';
 import { Formik, FieldArray, getIn } from 'formik';
-import * as Yup from 'yup';
+import { personSchema } from '../validation/person.schema';
 import { IoTrashBin } from 'react-icons/io5';
+import { toast } from 'react-toastify';
 
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
@@ -24,22 +25,6 @@ function EditForm({ person, closeModal }) {
 
 	const optionsPhone = ['Work', 'Home', 'Mobile', 'Other'];
 	const optionsEmail = ['Work', 'Home', 'Other'];
-	const phoneRegExp = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
-
-	//Form Validation Schema
-	const personSchema = Yup.object({
-		name: Yup.string().required('Name is required'),
-		email: Yup.array().of(
-			Yup.object().shape({
-				value: Yup.string().email('Invalid email'),
-			})
-		),
-		phone: Yup.array().of(
-			Yup.object().shape({
-				value: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
-			})
-		),
-	});
 
 	const handleSubmit = async (values, isValid) => {
 		try {
@@ -83,11 +68,12 @@ function EditForm({ person, closeModal }) {
 			};
 
 			await axios.put(`${API_URL}/persons/${personId}?api_token=${KEY}`, updatedPerson);
+			toast.success('Person updated successfully!');
 
 			setIsUpdated(false);
 			closeModal();
 		} catch (error) {
-			console.log(error);
+			toast.error('Error while updating a person!');
 		}
 	};
 
