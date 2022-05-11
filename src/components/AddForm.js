@@ -9,6 +9,7 @@ import { IoTrashBin } from 'react-icons/io5';
 const KEY = process.env.REACT_APP_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
 
+
 function AddForm({ closeModal }) {
 	const { setIsUpdated } = useContext(ContactListContext);
 
@@ -34,8 +35,8 @@ function AddForm({ closeModal }) {
 
 	const optionsPhone = ['Work', 'Home', 'Mobile', 'Other'];
 	const optionsEmail = ['Work', 'Home', 'Other'];
-	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
+	const phoneRegExp = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+	
 	//Form Validation Schema
 	const personSchema = Yup.object({
 		name: Yup.string().required('Name is required'),

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import axios from 'axios';
 import { ContactListContext } from '../context/contacts.context';
 import FlexRow from './Styled/FlexRow.styled';
-import { Formik, FieldArray, getIn, Field } from 'formik';
+import { Formik, FieldArray, getIn } from 'formik';
 import * as Yup from 'yup';
 import { IoTrashBin } from 'react-icons/io5';
 
@@ -24,7 +24,7 @@ function EditForm({ person, closeModal }) {
 
 	const optionsPhone = ['Work', 'Home', 'Mobile', 'Other'];
 	const optionsEmail = ['Work', 'Home', 'Other'];
-	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+	const phoneRegExp = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
 
 	//Form Validation Schema
 	const personSchema = Yup.object({
@@ -75,7 +75,7 @@ function EditForm({ person, closeModal }) {
 
 			// Create a person
 			const updatedPerson = {
-				name: values.organization,
+				name: values.name,
 				email: values.email,
 				phone: values.phone,
 				org_id: orgId,
