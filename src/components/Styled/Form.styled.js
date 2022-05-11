@@ -1,22 +1,7 @@
-import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
-  }
-  h1 {
-	  font-size: 1.5rem;
-  }
-  h2 {
-	  font-size: 1.2rem;
-  }
-  p, input, label, button, select {
-    font-size: 0.9rem;
-  }
-  form 	 {
+const Form = styled.form`
+	 {
 		width: 100%;
 		display: flex;
 		flex-flow: column wrap;
@@ -75,4 +60,12 @@ const GlobalStyle = createGlobalStyle`
 	}
 `;
 
-export default GlobalStyle;
+function StyledForm({ props, children }) {
+	return (
+		<Form >
+			{children}
+		</Form>
+	);
+}
+
+export default StyledForm;

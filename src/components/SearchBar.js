@@ -26,7 +26,7 @@ function SearchBar() {
 		setContacts(searchResult);
 	};
 
-	return <StyledSearchBar value={searchString} placeholder="Search by name" type="text" onInput={handleSearch} onChange={handleSearch} />;
+	return <StyledSearchBar value={searchString} placeholder="Search by name" type="text" onChange={handleSearch} />;
 }
 
 export default SearchBar;
