@@ -43,6 +43,9 @@ function EditForm({ person, closeModal }) {
 
 	const handleSubmit = async (values, isValid) => {
 		try {
+
+			if (!isValid) return;
+
 			const personId = person.id;
 			let orgId = person.org_id ? person.org_id.value : '';
 
@@ -99,7 +102,6 @@ function EditForm({ person, closeModal }) {
 
 				return (
 					<form id="edit-person-form" onSubmit={handleSubmit} noValidate>
-						{console.log(JSON.stringify(values, null, 2))}
 						<label htmlFor="name">Name</label>
 						<input
 							name="name"
@@ -124,7 +126,7 @@ function EditForm({ person, closeModal }) {
 										return (
 											<div key={item + i}>
 												<FlexRow justify="space-between" gap="0.8rem">
-													<input name={name} value={values.phone.value} onChange={handleChange} onBlur={handleBlur} />
+													<input name={name} value={values.phone.value} placeholder={item.value} onChange={handleChange} onBlur={handleBlur} />
 													<select name={`phone[${i}].label`} value={item.label} onChange={handleChange} onBlur={handleBlur}>
 														{optionsPhone.map((label) => (
 															<option key={label} value={label.toLowerCase()}>
@@ -156,7 +158,7 @@ function EditForm({ person, closeModal }) {
 										return (
 											<div key={item + i}>
 												<FlexRow justify="space-between" gap="0.8rem">
-													<input name={name} value={values.email.value} onChange={handleChange} onBlur={handleBlur} />
+													<input name={name} value={values.email.value} placeholder={item.value} onChange={handleChange} onBlur={handleBlur} />
 													<select name={`email[${i}].label`} value={item.label} onChange={handleChange} onBlur={handleBlur}>
 														{optionsEmail.map((label) => (
 															<option key={label} value={label.toLowerCase()}>

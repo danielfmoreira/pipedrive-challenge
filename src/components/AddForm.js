@@ -53,13 +53,10 @@ function AddForm({ closeModal }) {
 
 	const handleSubmit = async (values, isValid) => {
 		try {
-			console.log(values);
-			// if (!isValid) return;
+			if (!isValid) return;
 
 			// Create a organization and add location
 			let orgId = '';
-
-			console.log({name: values.organization})
 
 			if (values.organization) {
 				const newOrganization = await axios.post(`${API_URL}/organizations?api_token=${KEY}`, {
@@ -67,7 +64,6 @@ function AddForm({ closeModal }) {
 				});
 
 				orgId = newOrganization.data.data.id;
-				console.log()
 
 				await axios.put(`${API_URL}/organizations/${orgId}?api_token=${KEY}`, {
 					address: values.location,
@@ -82,8 +78,6 @@ function AddForm({ closeModal }) {
 				ead969773b1c36b82991c53b93516ee07556666e: values.assistant,
 				e17b7fccc25fc6a50263ba9421b9d0089b78ab86: values.groups,
 			};
-
-			console.log(newPerson)
 
 			const createdPerson = await axios.post(`${API_URL}/persons?api_token=${KEY}`, newPerson);
 			console.log({ createdPerson });
@@ -105,7 +99,6 @@ function AddForm({ closeModal }) {
 
 				return (
 					<form id="add-person-form" onSubmit={handleSubmit} noValidate>
-						{/* {console.log(JSON.stringify(values, null, 2))} */}
 						<label htmlFor="name">Name</label>
 						<input
 							name="name"
