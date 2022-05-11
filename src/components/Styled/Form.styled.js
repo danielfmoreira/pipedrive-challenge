@@ -61,11 +61,7 @@ const Form = styled.form`
 `;
 
 function StyledForm({ props, children }) {
-	return (
-		<Form >
-			{children}
-		</Form>
-	);
+	return <Form>{children}</Form>;
 }
 
 export default StyledForm;

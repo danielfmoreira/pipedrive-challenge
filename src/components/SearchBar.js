@@ -13,16 +13,16 @@ function SearchBar() {
 	const handleSearch = (event) => {
 		setSearchString(event.target.value);
 
-		if(searchString.length <= 0) {
-			setContacts(allContacts)
+		if (searchString.length <= 0) {
+			setContacts(allContacts);
 		}
 
-		console.log(searchString)
+		console.log(searchString);
 
 		const searchResult = allContacts.filter((person) => {
 			return person.name.toLowerCase().includes(searchString.toLowerCase());
 		});
-		
+
 		setContacts(searchResult);
 	};
 

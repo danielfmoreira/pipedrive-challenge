@@ -61,7 +61,7 @@ function ContactCard({ contact, index, getItemStyle }) {
 							<h2>{contact.name}</h2>
 							<IoBusinessOutline /> <span>{contact.org_name}</span>
 						</CardInfo>
-						<Avatar width="60px" src={hasPicture ? contact.picture_id.pictures[128] : ''} initials={initials} personName={contact.name}/>
+						<Avatar width="60px" src={hasPicture ? contact.picture_id.pictures[128] : ''} initials={initials} personName={contact.name} />
 					</Card>
 				)}
 			</Draggable>

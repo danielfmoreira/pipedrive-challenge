@@ -43,7 +43,6 @@ function EditForm({ person, closeModal }) {
 
 	const handleSubmit = async (values, isValid) => {
 		try {
-
 			if (!isValid) return;
 
 			const personId = person.id;

@@ -39,7 +39,7 @@ function ContactDetails({ contact, hasPicture, initials }) {
 	return (
 		<Box>
 			<div>
-				<Avatar width="90px" src={hasPicture ? contact.picture_id.pictures[128] : ''} initials={initials} personName={contact.name}/>
+				<Avatar width="90px" src={hasPicture ? contact.picture_id.pictures[128] : ''} initials={initials} personName={contact.name} />
 				<h3>{contact.name}</h3>
 				<p className="phone">{contact.phone[0]?.value}</p>
 			</div>
